@@ -45,8 +45,16 @@ def plot_classes(data, assignments):
     ax.set_xlabel('Dim. 1')
     ax.set_ylabel('Dim. 2')
     ax.set_zlabel('Dim. 3')
-    plt.legend(ncol=3, markerscale=6)
-    return fig, plt
+    
+    # Create legend as seperate figure
+    legend_fig = plt.figure()
+    legend_ax = legend_fig.add_subplot(111)
+    legend_ax.axis('off') 
+    handles, labels = ax.get_legend_handles_labels()
+    legend_ax.legend(handles, labels, ncol=3, markerscale=6, loc = 'center left')
+    legend_fig.tight_layout()
+    
+    return fig, legend_fig, plt
 
 
 def plot_accuracy(scores):

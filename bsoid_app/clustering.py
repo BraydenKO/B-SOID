@@ -54,11 +54,12 @@ class cluster:
         st.write('Showing {}% data that were confidently assigned.'
                  ''.format(round(self.assignments[self.assignments >= 0].shape[0] /
                                  self.assignments.shape[0] * 100)))
-        fig1, plt1 = visuals.plot_classes(self.sampled_embeddings[self.assignments >= 0],
+        fig1, legend, plt1 = visuals.plot_classes(self.sampled_embeddings[self.assignments >= 0],
                                           self.assignments[self.assignments >= 0])
-        plt1.suptitle('HDBSCAN assignment')
+        fig1.suptitle("HDBSCAN Assignment", ha='center')
         col1, col2 = st.beta_columns([2, 2])
         col1.pyplot(fig1)
+        col2.pyplot(legend)
 
     def slider(self, min_=0.5, max_=1.0):
         st.markdown('The following slider allows you to tweak number of groups based on minimum size requirements.')
