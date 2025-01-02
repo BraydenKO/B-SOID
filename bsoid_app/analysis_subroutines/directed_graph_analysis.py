@@ -50,17 +50,24 @@ class directed_graph:
             graph = nx.from_numpy_matrix(self.transition_matrix_norm, create_using=nx.MultiDiGraph())
             node_position = nx.layout.spring_layout(graph, seed=0)
             edge_colors = [graph[u][v][0].get('weight') for u, v in graph.edges()]
-            nodes = nx.draw_networkx_nodes(graph, node_position, node_size=self.node_sizes,
-                                           node_color='blue')
+
+            nodes = nx.draw_networkx_nodes(graph, node_position, node_size=self.node_sizes, node_color='blue')
+
+            # Draw edges with curved lines
             edges = nx.draw_networkx_edges(graph, node_position, node_size=self.node_sizes, arrowstyle='->',
-                                           arrowsize=8, edge_color=edge_colors, edge_cmap=plt.cm.Blues, width=1.5)
-            label_pos = [node_position[i] + 0.005 for i in range(len(node_position))]
-            nx.draw_networkx_labels(graph, label_pos, font_size=10)
+                                           arrowsize=8, edge_color=edge_colors, edge_cmap=plt.cm.Blues, width=1.5,
+                                           connectionstyle='arc3,rad=0.2', alpha=0.7)
+
+            nx.draw_networkx_labels(graph, node_position, font_size=10)
+
+            # Add colorbar
             pc = mpl.collections.PatchCollection(edges, cmap=plt.cm.Blues)
             pc.set_array(edge_colors)
             plt.colorbar(pc)
+
             ax = plt.gca()
             ax.set_axis_off()
+
             st.pyplot(fig)
 
     def main(self):
