@@ -39,10 +39,9 @@ class extract:
         fraction = st.number_input('Enter training input __fraction__ (do not change this value if you wish '
                                    'to generate the side-by-side video seen on our GitHub page):',
                                    min_value=0.1, max_value=1.0, value=1.0)
-        if fraction == 1.0:
-            self.train_size = data_size
-        else:
-            self.train_size = int(data_size * fraction)
+        
+        self.train_size = int(data_size * fraction)
+ 
         st.markdown('You have opted to train on a cumulative of **{} minutes** total. '
                     'If this does not sound right, the framerate might be wrong.'.format(self.train_size / 600))
 
