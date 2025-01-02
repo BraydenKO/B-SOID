@@ -72,9 +72,15 @@ class performance:
                                       (8.5, 16), fig_format, out_path, save=True)
 
     def main(self):
-        try:
-            self.load_performance()
-        except:
-            self.cross_validate()
-            self.load_performance()
+        """
+        Allows the client to start K-fold cross-validation regardless
+        of whether there is performance data to be loaded (this allows
+        clients to run this multiple times which may overwrite previous results
+        if not explicitly saved).
+        
+        If there exists past performance data, the client can see the most
+        recent results (even if not explicitly saved to the device).
+        """
+        self.cross_validate() 
+        self.load_performance()
         self.show_accuracy_plot()
