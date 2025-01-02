@@ -72,7 +72,7 @@ def import_folders(base_path, folders: list, pose):
 
 
 def adp_filt(currdf: object, pose):
-    lIndex = []
+    lIndex = [] # likelihood
     xIndex = []
     yIndex = []
     currdf = np.array(currdf[1:])
