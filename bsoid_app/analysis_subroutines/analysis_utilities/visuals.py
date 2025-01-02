@@ -200,7 +200,7 @@ def plot_trajectory(limbs, labels, soft_assignments, t_range, ord1, ord2, c,
                     if labels[transitions[t]] == g and o == 0:
                         ax1.axvspan(transitions[t], transitions[t + 1], color=cmap[g], alpha=0.2, lw=0)
                         plt.text(transitions[t], np.max([proc_limb[ord1[i]].max() for i in range(len(ord1))]),
-                                 '{}'.format(g), fontsize=6)
+                                 '{}'.format(g), fontsize=5, horizontalalignment='center')
         ax1 = plt.gca()
         ax1.get_xaxis().set_visible(False)
         ax2 = plt.subplot(2, 1, 2)
@@ -214,6 +214,8 @@ def plot_trajectory(limbs, labels, soft_assignments, t_range, ord1, ord2, c,
                 for g in np.unique(soft_assignments):
                     if labels[transitions[t]] == g:
                         ax2.axvspan(transitions[t], transitions[t + 1], color=cmap[g], alpha=0.2, lw=0)
+                        plt.text(transitions[t], np.max([proc_limb[ord1[i]].max() for i in range(len(ord1))]),
+                                 '{}'.format(g), fontsize=5, horizontalalignment='center')
         ax2 = plt.gca()
         ax1.spines['top'].set_visible(False)
         ax1.spines['right'].set_visible(False)
@@ -225,8 +227,19 @@ def plot_trajectory(limbs, labels, soft_assignments, t_range, ord1, ord2, c,
         ax2.spines['left'].set_visible(True)
         plt.gca().invert_yaxis()
         ax2.set_xticks(range(0, len(labels), 40))
-        ax1.set_yticks(range(0, int(np.percentile(np.concatenate(limbs), 98)), 5))
-        ax2.set_yticks(range(0, int(np.percentile(np.concatenate(limbs), 98)), 5))
+        
+        y_ticks = np.linspace(0, int(np.percentile(np.concatenate(limbs), 98)), 10)
+        ax1.set_yticks(y_ticks)
+        ax2.set_yticks(y_ticks)
+        
+        ax1.tick_params(axis='y', which='major', labelsize=5)
+        ax2.tick_params(axis='y', which='major', labelsize=5)
+        
+        for label in ax2.get_xticklabels():
+            label.set_rotation(45)
+            label.set_horizontalalignment('right')
+        
+        
         if save:
             ax1.spines['left'].set_linewidth(4)
             ax2.spines['left'].set_linewidth(4)
